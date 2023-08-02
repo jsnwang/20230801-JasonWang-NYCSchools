@@ -1,49 +1,32 @@
 package com.moo.nycschools.model
 
 
-import androidx.annotation.Keep
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
-@Keep
+@Parcelize
 data class HighSchool(
-    @SerializedName("bbl")
-    val bbl: String,
-    @SerializedName("bin")
-    val bin: String,
-    @SerializedName("boro")
-    val boro: String,
-    @SerializedName("borough")
-    val borough: String,
-    @SerializedName("building_code")
-    val buildingCode: String,
-    @SerializedName("bus")
-    val bus: String,
-    @SerializedName("campus_name")
-    val campusName: String,
-    @SerializedName("census_tract")
-    val censusTract: String,
     @SerializedName("city")
-    val city: String,
+    val city: String = "",
     @SerializedName("dbn")
-    val dbn: String,
+    val dbn: String = "",
     @SerializedName("neighborhood")
-    val neighborhood: String,
+    val neighborhood: String = "",
     @SerializedName("primary_address_line_1")
-    val primaryAddressLine: String,
+    val primaryAddressLine: String = "",
     @SerializedName("phone_number")
-    val phoneNumber: String,
+    val phoneNumber: String = "",
     @SerializedName("school_email")
-    val schoolEmail: String,
+    val schoolEmail: String = "",
     @SerializedName("school_name")
-    val schoolName: String,
+    val schoolName: String = "",
     @SerializedName("state_code")
-    val stateCode: String,
-    @SerializedName("subway")
-    val subway: String,
-    @SerializedName("total_students")
-    val totalStudents: String,
+    val stateCode: String = "",
     @SerializedName("zip")
-    val zip: String,
+    val zip: String = "",
     @SerializedName("location")
-    val location: String,
-)
+    val location: String = "",
+    @SerializedName("overview_paragraph")
+    val overviewParagraph: String = "",
+) : Parcelable

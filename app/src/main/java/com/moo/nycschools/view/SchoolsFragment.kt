@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.moo.nycschools.R
@@ -41,6 +42,13 @@ class SchoolsFragment : Fragment(R.layout.fragment_list) {
     private fun setView() {
         binding.rvList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvList.adapter = schoolAdapter
+
+        schoolAdapter.setOnItemClickListener(object : SchoolAdapter.OnItemClickListener {
+            override fun onItemClick(school: HighSchool) {
+                navigateToDetails(school)
+                binding.etSearch.text.clear()
+            }
+        })
     }
 
     private fun setObservers() {
@@ -83,6 +91,7 @@ class SchoolsFragment : Fragment(R.layout.fragment_list) {
         })
     }
 
+    //to reduce redundancy, showProgressBar() and hideProgressBar() should be in some Base class that we inherit from
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
@@ -104,5 +113,11 @@ class SchoolsFragment : Fragment(R.layout.fragment_list) {
             }
         }
         schoolAdapter.submitList(filteredList)
+    }
+
+    //navigate using safeargs
+    private fun navigateToDetails(school: HighSchool) {
+        val action = SchoolsFragmentDirections.actionSchoolsFragmentToDetailsFragment(school)
+        findNavController().navigate(action)
     }
 }

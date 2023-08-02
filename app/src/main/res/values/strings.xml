@@ -2,4 +2,7 @@
     <string name="app_name">NYCSchools</string>
     <string name="search">Search</string>
     <string name="unexpected_error">An unexpected error has occurred.</string>
+    <string name="sat_scores">Average SAT Scores</string>
+    <string name="reading_math_writing">Reading: %1$s   Math: %2$s  Writing:%3$s</string>
+    <string name="no_data_found">No data found.</string>
 </resources>

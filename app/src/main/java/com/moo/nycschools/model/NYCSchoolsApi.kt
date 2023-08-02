@@ -1,7 +1,7 @@
 package com.moo.nycschools.model
 
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface NYCSchoolsApi {
 
@@ -9,8 +9,8 @@ interface NYCSchoolsApi {
     suspend fun getHighSchools(
     ): List<HighSchool>
 
-    @GET("resource/f9bf-2cp4.json/{dbn}")
+    @GET("resource/f9bf-2cp4.json")
     suspend fun getSATScores(
-        @Path("dbn") schoolDbn: String
+        @Query("dbn") schoolDbn: String,
     ): List<SATScores>
 }

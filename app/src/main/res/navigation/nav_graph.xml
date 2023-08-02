@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/schoolsFragment"
         android:name="com.moo.nycschools.view.SchoolsFragment"
-        android:label="SchoolsFragment" />
+        android:label="SchoolsFragment" >
+        <action
+            android:id="@+id/action_schoolsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.moo.nycschools.view.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="school"
+            app:argType="com.moo.nycschools.model.HighSchool" />
+    </fragment>
 </navigation>
