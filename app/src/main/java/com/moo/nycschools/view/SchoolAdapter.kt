@@ -33,7 +33,8 @@ class SchoolAdapter : ListAdapter<HighSchool, SchoolAdapter.SchoolViewHolder>(Di
     class SchoolViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(school: HighSchool) {
             binding.tvName.text = school.schoolName
-
+            binding.tvAddress.text = school.primaryAddressLine
+            binding.tvCity.text = "${school.city}, ${school.stateCode} ${school.zip}"
         }
     }
 }

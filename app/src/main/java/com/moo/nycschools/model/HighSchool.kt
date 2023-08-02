@@ -28,6 +28,8 @@ data class HighSchool(
     val dbn: String,
     @SerializedName("neighborhood")
     val neighborhood: String,
+    @SerializedName("primary_address_line_1")
+    val primaryAddressLine: String,
     @SerializedName("phone_number")
     val phoneNumber: String,
     @SerializedName("school_email")
