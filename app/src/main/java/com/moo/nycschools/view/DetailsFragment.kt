@@ -13,6 +13,8 @@ import com.moo.nycschools.model.SATScores
 import com.moo.nycschools.util.Status
 import com.moo.nycschools.viewmodel.NYCSchoolsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.HttpException
+import java.io.IOException
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -24,6 +26,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         super.onCreate(savedInstanceState)
         viewModel.getScores(args.school.dbn)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setView()
@@ -46,11 +49,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 Status.SUCCESS -> {
                     hideProgressBar()
                     setSATScores(satScoresState.data ?: emptyList())
-                    Log.d("FETCH SCORES SUCCESS", satScoresState.data.toString())
                 }
 
                 Status.ERROR -> {
                     hideProgressBar()
+                    getSATScoresError(satScoresState.error)
                     Log.d("FETCH SCORES ERROR", satScoresState.error?.message.toString())
                 }
             }
@@ -70,6 +73,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             )
         }
 
+    }
+
+    private fun getSATScoresError(error: Throwable?) {
+        when (error) {
+            is IOException -> binding.tvScores.text = getString(R.string.io_error)
+            is HttpException -> binding.tvScores.text = getString(R.string.http_error)
+            else -> binding.tvScores.text = getString(R.string.generic_error)
+        }
     }
 
     //to reduce redundancy, showProgressBar() and hideProgressBar() should be in some Base class that we inherit from

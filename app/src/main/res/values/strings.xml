@@ -5,4 +5,8 @@
     <string name="sat_scores">Average SAT Scores</string>
     <string name="reading_math_writing">Reading: %1$s   Math: %2$s  Writing:%3$s</string>
     <string name="no_data_found">No data found.</string>
+    <string name="io_error">Check your internet connection and try again.</string>
+    <string name="http_error">Server error. Please try again later.</string>
+    <string name="generic_error">An unexpected error has occurred.</string>
+    <string name="retry">Retry</string>
 </resources>

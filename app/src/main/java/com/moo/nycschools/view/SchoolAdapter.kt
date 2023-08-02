@@ -31,7 +31,8 @@ class SchoolAdapter : ListAdapter<HighSchool, SchoolAdapter.SchoolViewHolder>(Di
         fun onItemClick(school: HighSchool)
     }
 
-    inner class SchoolViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SchoolViewHolder(private val binding: ListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(school: HighSchool) {
             binding.cvSchoolItem.setOnClickListener {
                 val position = adapterPosition

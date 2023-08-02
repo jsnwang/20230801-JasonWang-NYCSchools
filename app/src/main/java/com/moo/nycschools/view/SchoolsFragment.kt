@@ -16,6 +16,8 @@ import com.moo.nycschools.model.HighSchool
 import com.moo.nycschools.util.Status
 import com.moo.nycschools.viewmodel.NYCSchoolsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.HttpException
+import java.io.IOException
 
 @AndroidEntryPoint
 class SchoolsFragment : Fragment(R.layout.fragment_list) {
@@ -57,22 +59,29 @@ class SchoolsFragment : Fragment(R.layout.fragment_list) {
             when (highSchoolState.status) {
                 Status.LOADING -> {
                     showProgressBar()
+                    println("LOADING")
                 }
 
                 Status.SUCCESS -> {
                     hideProgressBar()
-                    schoolAdapter.submitList(highSchoolState.data)
-                    schoolList = highSchoolState.data
-                    setSearchBar()
-                    println("Fetch highschools success")
+                    onGetSchoolsSuccess(highSchoolState.data)
                 }
 
                 Status.ERROR -> {
                     hideProgressBar()
+                    onGetSchoolsError(highSchoolState.error)
                     Log.d("FETCH ERROR", highSchoolState.error?.message.toString())
                 }
             }
         }
+    }
+
+    private fun onGetSchoolsSuccess(schools: List<HighSchool>?) {
+        schoolAdapter.submitList(schools)
+        schoolList = schools
+        setSearchBar()
+        binding.rvList.visibility = View.VISIBLE
+        binding.llError.visibility = View.GONE
     }
 
     private fun setSearchBar() {
@@ -89,6 +98,24 @@ class SchoolsFragment : Fragment(R.layout.fragment_list) {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
+
+    private fun onGetSchoolsError(error: Throwable?) {
+        when (error) {
+            is IOException -> binding.tvError.text = getString(R.string.io_error)
+            is HttpException -> binding.tvError.text = getString(R.string.http_error)
+            else -> binding.tvError.text = getString(R.string.generic_error)
+        }
+        binding.rvList.visibility = View.INVISIBLE
+        binding.llError.visibility = View.VISIBLE
+        setRetryButtonListener()
+
+    }
+
+    private fun setRetryButtonListener() {
+        binding.btRetry.setOnClickListener {
+            viewModel.getSchools()
+        }
     }
 
     //to reduce redundancy, showProgressBar() and hideProgressBar() should be in some Base class that we inherit from
