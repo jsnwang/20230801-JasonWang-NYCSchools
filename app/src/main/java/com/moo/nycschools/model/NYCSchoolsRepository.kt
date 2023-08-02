@@ -1,28 +1,26 @@
 package com.moo.nycschools.model
 
-import com.moo.nycschools.util.Resource
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import java.lang.Exception
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.IOException
 import javax.inject.Inject
 
 class NYCSchoolsRepository @Inject constructor(private val api: NYCSchoolsApi) {
-    suspend fun getHighSchools(): Resource<List<HighSchool>> {
-        return try {
-            Resource.Success(data = api.getHighSchools())
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Resource.Error(e.message ?: "An unknown error has occured.")
+    suspend fun getHighSchools(): List<HighSchool> = withContext(Dispatchers.IO) {
+        try {
+            val response = api.getHighSchools()
+            response
+        } catch (e: IOException) {
+            throw IOException("Error fetching HighSchools data", e)
         }
     }
 
-    suspend fun getSATScores(dbn: String): Resource<List<SATScores>> {
-        return try {
-            Resource.Success(data = api.getSATScores(dbn))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Resource.Error(e.message ?: "An unknown error has occured.")
+    suspend fun getSATScores(schoolDbn: String): List<SATScores> = withContext(Dispatchers.IO) {
+        try {
+            val response = api.getSATScores(schoolDbn)
+            response
+        } catch (e: IOException) {
+            throw IOException("Error fetching SATScores data", e)
         }
     }
 }
