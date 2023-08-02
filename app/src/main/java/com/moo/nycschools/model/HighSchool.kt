@@ -43,5 +43,7 @@ data class HighSchool(
     @SerializedName("total_students")
     val totalStudents: String,
     @SerializedName("zip")
-    val zip: String
+    val zip: String,
+    @SerializedName("location")
+    val location: String,
 )

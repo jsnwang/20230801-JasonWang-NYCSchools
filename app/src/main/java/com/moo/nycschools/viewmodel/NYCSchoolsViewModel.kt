@@ -14,12 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NYCSchoolsViewModel @Inject constructor(private val repo: NYCSchoolsRepository): ViewModel() {
+class NYCSchoolsViewModel @Inject constructor(private val repo: NYCSchoolsRepository) :
+    ViewModel() {
+
+    //Used LiveData over StateFlow/Flow because of familiarity
     private val _highSchoolsState = MutableLiveData<UiState<List<HighSchool>>>()
     val highSchoolsState: LiveData<UiState<List<HighSchool>>> = _highSchoolsState
 
-    private val _SATScoresState = MutableLiveData<UiState<List<SATScores>>>()
-    val SATScoresState: LiveData<UiState<List<SATScores>>> = _SATScoresState
+    private val _satScoresState = MutableLiveData<UiState<List<SATScores>>>()
+    val satScoresState: LiveData<UiState<List<SATScores>>> = _satScoresState
 
 
     fun getSchools() = viewModelScope.launch {
@@ -33,12 +36,12 @@ class NYCSchoolsViewModel @Inject constructor(private val repo: NYCSchoolsReposi
     }
 
     fun getScores(dbn: String) = viewModelScope.launch {
-        _SATScoresState.value = UiState(status = Status.LOADING)
+        _satScoresState.value = UiState(status = Status.LOADING)
         try {
             val response = repo.getSATScores(dbn)
-            _SATScoresState.value = UiState(status = Status.SUCCESS, data = response)
+            _satScoresState.value = UiState(status = Status.SUCCESS, data = response)
         } catch (e: Exception) {
-            _SATScoresState.value = UiState(status = Status.ERROR, error = e)
+            _satScoresState.value = UiState(status = Status.ERROR, error = e)
         }
     }
 }

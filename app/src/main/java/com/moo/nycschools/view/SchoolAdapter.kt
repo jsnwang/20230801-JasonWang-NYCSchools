@@ -9,7 +9,7 @@ import com.moo.nycschools.model.HighSchool
 import com.moo.nycschools.util.DiffUtil
 
 
-class SchoolAdapter : ListAdapter<HighSchool, SchoolAdapter.SchoolViewHolder>(DiffUtil())  {
+class SchoolAdapter : ListAdapter<HighSchool, SchoolAdapter.SchoolViewHolder>(DiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchoolViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,15 +26,18 @@ class SchoolAdapter : ListAdapter<HighSchool, SchoolAdapter.SchoolViewHolder>(Di
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
+
     interface OnItemClickListener {
         fun onItemClick(school: HighSchool)
     }
 
-    class SchoolViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class SchoolViewHolder(private val binding: ListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(school: HighSchool) {
             binding.tvName.text = school.schoolName
             binding.tvAddress.text = school.primaryAddressLine
-            binding.tvCity.text = "${school.city}, ${school.stateCode} ${school.zip}"
+            binding.tvCity.text =
+                "${school.city}, ${school.stateCode} ${school.zip}" //this should be a string resource
         }
     }
 }
