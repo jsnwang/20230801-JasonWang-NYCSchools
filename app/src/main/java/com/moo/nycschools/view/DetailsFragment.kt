@@ -36,7 +36,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun setView() {
         binding.tvName.text = args.school.schoolName
         binding.tvDesc.text = args.school.overviewParagraph
-        binding.tvAddress.text = args.school.location.substringBeforeLast(" (")
+        binding.tvAddress.text = args.school.location.substringBeforeLast(" (") //remove lat and long text
     }
 
     private fun setObservers() {
@@ -48,7 +48,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
                 Status.SUCCESS -> {
                     hideProgressBar()
-                    setSATScores(satScoresState.data ?: emptyList())
+                    onSATScoresSuccess(satScoresState.data ?: emptyList())
                 }
 
                 Status.ERROR -> {
@@ -60,7 +60,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
     }
 
-    private fun setSATScores(scores: List<SATScores>) {
+    private fun onSATScoresSuccess(scores: List<SATScores>) {
         if (scores.isEmpty()) {
             binding.tvScores.text = getString(R.string.no_data_found)
         } else {

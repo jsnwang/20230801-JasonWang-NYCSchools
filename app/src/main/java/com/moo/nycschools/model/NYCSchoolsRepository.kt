@@ -15,6 +15,7 @@ class NYCSchoolsRepository @Inject constructor(private val api: NYCSchoolsApi) {
         }
     }
 
+    //Queries the SATScores api using the unique dbn of the school
     suspend fun getSATScores(schoolDbn: String): List<SATScores> = withContext(Dispatchers.IO) {
         try {
             val response = api.getSATScores(schoolDbn)
